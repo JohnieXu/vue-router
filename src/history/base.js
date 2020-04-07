@@ -130,6 +130,16 @@ export class History {
       route.matched
     )
 
+    /**
+     * TODO:
+     * 导航守卫解析队列：
+     * 失效组件的beforeRouterLeave
+     * 全局的前置钩子beforeEach
+     * 重用的组件beforeRouteUpdate
+     * 路由配置的beforeRouteEnter
+     * 路由配置中异步组件的加载解析
+     */
+
     const queue: Array<?NavigationGuard> = [].concat(
       // in-component leave guards
       extractLeaveGuards(deactivated),
@@ -230,6 +240,10 @@ function normalizeBase (base: ?string): string {
   return base.replace(/\/$/, '')
 }
 
+/**
+ * TODO:
+ * 计算路由切换时前后两次路由匹配的路由组件的更新、激活、失活状态
+ */
 function resolveQueue (
   current: Array<RouteRecord>,
   next: Array<RouteRecord>
@@ -259,6 +273,10 @@ function extractGuards (
   reverse?: boolean
 ): Array<?Function> {
   const guards = flatMapComponents(records, (def, instance, match, key) => {
+    /**
+     * TODO:
+     * 提取组件上定义的导航守卫
+     */
     const guard = extractGuard(def, name)
     if (guard) {
       return Array.isArray(guard)
@@ -321,6 +339,11 @@ function bindEnterGuard (
     return guard(to, from, cb => {
       if (typeof cb === 'function') {
         cbs.push(() => {
+          /**
+           * TODO:
+           * 当router-view被transition组件包裹时，路由组件的挂在时机并不在此处，故需要轮询组件挂载时机进而触发routerEnter导航守卫的回调函数
+           * 需要进一步看下transition的实现原理
+           */
           // #750
           // if a router-view is wrapped with an out-in transition,
           // the instance may not have been registered at this time.

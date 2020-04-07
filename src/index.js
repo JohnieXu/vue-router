@@ -51,6 +51,14 @@ export default class VueRouter {
     }
     this.mode = mode
 
+    /**
+     * TODO:
+     * 根据生成VueRouter实例对象时传入的mode生成对应路由类型的history对象，用于处理路由
+     * HTML5History：H5的hisotry路由模式
+     * HashHistory：hash路由模式
+     * AbstractHistory：内存路由模式（通过内存模拟了路由栈，并实现了push、replace、go等路由方法）
+     */
+
     switch (mode) {
       case 'history':
         this.history = new HTML5History(this, options.base)
@@ -79,6 +87,12 @@ export default class VueRouter {
   get currentRoute (): ?Route {
     return this.history && this.history.current
   }
+
+  /**
+   * TODO:
+   * install.js中定义的组件beforeCreate中调用此处的init方法，处理组件实例、路由初次挂在的路由跳转、监听路由变化更新组件实例的路由对象
+   * app指的是每个vue组件的的实例对象，即vue-router会向所有组件注入$router、route等
+   */
 
   init (app: any /* Vue component instance */) {
     process.env.NODE_ENV !== 'production' && assert(
@@ -129,6 +143,11 @@ export default class VueRouter {
       })
     })
   }
+
+  /**
+   * TODO:
+   * 全局导航守卫：beforeEach、beforeResolve、afterEach
+   */
 
   beforeEach (fn: Function): Function {
     return registerHook(this.beforeHooks, fn)
@@ -232,6 +251,11 @@ export default class VueRouter {
       resolved: route
     }
   }
+
+  /**
+   * TODO:
+   * 动态注册路由
+   */
 
   addRoutes (routes: Array<RouteConfig>) {
     this.matcher.addRoutes(routes)

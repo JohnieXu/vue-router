@@ -19,6 +19,10 @@ export function resolveAsyncComponents (matched: Array<RouteRecord>): Function {
         hasAsync = true
         pending++
 
+        /**
+         * TODO:
+         * 异步路由解析：重写异步组件的resolve、reject方法，添加了组件加载状态控制、路由解析控制；对异步组件的传统写法及promise写进行兼容
+         */
         const resolve = once(resolvedDef => {
           if (isESModule(resolvedDef)) {
             resolvedDef = resolvedDef.default
@@ -47,6 +51,10 @@ export function resolveAsyncComponents (matched: Array<RouteRecord>): Function {
 
         let res
         try {
+          /**
+           * TODO:
+           * 若异加载异步组件定义失败，则对应的错误由catch进行捕获 例如：failed to load chunk ...
+          */
           res = def(resolve, reject)
         } catch (e) {
           reject(e)

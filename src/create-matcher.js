@@ -18,10 +18,18 @@ export function createMatcher (
   router: VueRouter
 ): Matcher {
   const { pathList, pathMap, nameMap } = createRouteMap(routes)
-
+  /**
+   * TODO:
+   * 动态路由注册：将传入的路由记录合并到生成VueRoute实例是原有的路由记录中
+   */
   function addRoutes (routes) {
     createRouteMap(routes, pathList, pathMap, nameMap)
   }
+
+  /**
+   * TODO:
+   * RouterMatcher核心方法，根据location匹配路由映射中匹配的路由记录
+   */
 
   function match (
     raw: RawLocation,
@@ -175,6 +183,10 @@ function matchRoute (
   path: string,
   params: Object
 ): boolean {
+  /**
+   * TODO:
+   * 动态路由匹配：采用path-to-regexp生成的正则匹配path中的动态参数
+   */
   const m = path.match(regex)
 
   if (!m) {

@@ -23,6 +23,16 @@ export default {
 
     // determine current view depth, also check to see if the tree
     // has been toggled inactive but kept-alive.
+
+    /**
+     * TODO:
+     * 此处直接与keep-alive组件关联
+     * parent表示router-view组件的直接父级组件实例，根据parent的属性来判断当前router-view组件处渲染的组件是否是keep-alive缓存的，是否是处于inactive状态
+     * vnodeData.keepAlive：表示当前组件的父组件是否是keep-alive
+     * parent._inactive由vue核心模块的observer/scheduler调度器更新，标识当前组件是否是否处于ative状态
+     * parent._directInactive由vue核心模块的instance/lifecycle更新，标识当前组件是否处于active状态（与上述的区别参见这个[issue](https://github.com/vuejs/vue-router/issues/1212)）
+     */
+
     let depth = 0
     let inactive = false
     while (parent && parent._routerRoot !== parent) {

@@ -25,6 +25,11 @@ export function createRouteMap (
     addRouteRecord(pathList, pathMap, nameMap, route)
   })
 
+  /**
+   * TODO:
+   * 处理路由的优先级循序：将路由记录中的通配符*表示的路由按循序移动到路由记录末尾
+   * 采用的哪种排序算法？
+   */
   // ensure wildcard routes are always at the end
   for (let i = 0, l = pathList.length; i < l; i++) {
     if (pathList[i] === '*') {
@@ -53,6 +58,13 @@ export function createRouteMap (
   }
 }
 
+/**
+ * TODO:
+ * 路由记录，将路由所有的路由记录映射到pathMap、nameMap中，pathMap：按路径映射，nameMap：按名称映射，pathList所有路由path组成的数组
+ * 处理嵌套路由：递归调用此方法，parent表示父级路由
+ * 处理路由别名：把路径别名看成是指向同一个组件的路由记录，由此方法处理一遍这个别名组成的路由
+ * 处理路由名称：若存在路由名称，则将该路由映射到nameMap中存储
+ */
 function addRouteRecord (
   pathList: Array<string>,
   pathMap: Dictionary<RouteRecord>,
@@ -175,6 +187,10 @@ function addRouteRecord (
   }
 }
 
+/**
+ * TODO:
+ * 调用path-to-regexp生成路由匹配用的正则
+ */
 function compileRouteRegex (
   path: string,
   pathToRegexpOptions: PathToRegexpOptions
